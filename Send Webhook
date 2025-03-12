@@ -1,5 +1,6 @@
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
+local HR = (syn and syn.request) or http_request or request or (http and http.request) or nil
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -26,7 +27,7 @@ local messageInput = Instance.new("TextBox")
 messageInput.Size = UDim2.new(1, 0, 0, 50)
 messageInput.Position = UDim2.new(0, 0, 0, 60)
 messageInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-messageInput.Text = "Nhập nội dung..."
+messageInput.Text = "Content"
 messageInput.Parent = frame
 
 local sendButton = Instance.new("TextButton")
@@ -46,7 +47,37 @@ local function sendWebhook()
     end
     
     local success, response = pcall(function()
-        return HttpService:PostAsync(url, HttpService:JSONEncode({content = content}), Enum.HttpContentType.ApplicationJson)
+        return HR({
+            Url = url,
+            Method = 'POST',
+            Headers = {
+                ['Content-Type'] = 'application/json'
+            },
+            Body = HttpService:JSONEncode( {
+                ["content"] = tostring(content),
+                ["username"] = "Webhook Sender",
+                ["avatar_url"] = "https://media.discordapp.net/attachments/1078304895158988840/1122690877542912201/Thiet_ke_chua_co_ten.gif?width=580&height=580",
+                ["embeds"] = {
+                    {
+                        ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%S.000Z") , 
+                        ["title"] = " **Player ||" .. game.Players.LocalPlayer.Name .. "||**",
+                        ["description"] = "",
+                        ["type"] = "",
+                        ["color"] = tonumber("0x7B79CC"),
+                        ["thumbnail"] = {
+                            ["url"] = "https://media.discordapp.net/attachments/1078304895158988840/1122690877542912201/Thiet_ke_chua_co_ten.gif?width=580&height=580"
+                        },
+                        ["fields"] = {
+                            {
+                                ["name"] = "**Message**",
+                                ["value"] = tostring(content),
+                                ["inline"] = false
+                            },
+                        }
+                    }
+                }
+            })
+        })
     end)
     
     if success then
