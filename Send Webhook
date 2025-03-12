@@ -1,7 +1,6 @@
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 
--- Tạo GUI
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 
