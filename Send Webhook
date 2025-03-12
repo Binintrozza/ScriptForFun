@@ -33,7 +33,7 @@ local sendButton = Instance.new("TextButton")
 sendButton.Size = UDim2.new(1, 0, 0, 30)
 sendButton.Position = UDim2.new(0, 0, 0, 120)
 sendButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-sendButton.Text = "Gửi Webhook"
+sendButton.Text = "Send Webhook"
 sendButton.Parent = frame
 
 local function sendWebhook()
@@ -41,7 +41,7 @@ local function sendWebhook()
     local content = messageInput.Text
     
     if url == "" or content == "" then
-        warn("Vui lòng nhập đầy đủ thông tin")
+        warn("Input Webhooklink")
         return
     end
     
